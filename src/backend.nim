@@ -1,5 +1,14 @@
-# This is just an example to get you started. A typical binary package
-# uses this file as the main entry point of the application.
+import jester
 
+router backendRouter:
+  get "/":
+    resp "It's alive!"
+
+proc main() =
+  let port = paramStr(1).parseInt().Port
+  let settings = newSettings(port=port)
+  var jester = initJester(myrouter, settings=settings)
+  jester.serve()
+  
 when isMainModule:
-  echo("Hello, World!")
+  main()
