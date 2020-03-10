@@ -1,31 +1,24 @@
-import parsecfg, os, macros
+import parsecfg, os, tables
 import defaults
-import types/config
+import typeutil
 
-var loadedConfig: TkConfig
-
-proc getLoadedConfig*(): TkConfig =
-  ## Returns the loaded config
-  loadedConfig
+var loadedConfig: Config
 
 proc initCfg*(filename: string) =
   ## Initializes the config file with default values
-  
   var cfg = newConfig()
 
-  expandMacros:
-    for cat in defaultConfigTable:
-      for pair in cat.pairs:
-        let value = $getValue(pair)
-        
-        cfg.setSectionKey(cat.category, pair.key, value)
+  for cat in defaultConfigTable:
+    for pair in cat.pairs:
+      cfg.setSectionKey(cat.category, pair.key, pair.value)
 
   loadedConfig = cfg
   cfg.writeConfig filename
 
 proc loadCfg*(filename: string): bool =
-  ## Tries to load the config file into memory
-  ## If the file doesn't exist it creates it and fills it with default values
+  ##[ Tries to load the config file into memory
+      If the file doesn't exist it creates it and fills it with default values
+      Returns true if it created a new config file ]##
   
   if not fileExists(filename):
     initCfg(filename)
@@ -33,5 +26,10 @@ proc loadCfg*(filename: string): bool =
   else:
     loadedConfig = loadConfig(filename)
     return false
-
-initCfg("nigger")
+    
+proc cfg*(T: typedesc, category: string, key: string): T =
+  if not loadedConfig.hasKey(category) or
+     not loadedConfig[category].hasKey(key):
+    return T.default
+  
+  T.parseValue( loadedConfig[category][key] )
