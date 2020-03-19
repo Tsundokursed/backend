@@ -1,6 +1,6 @@
 import parsecfg, os, tables
-import defaults
-import typeutil
+import elvis
+import typeutil, defaults
 
 var loadedConfig: Config
 
@@ -28,6 +28,9 @@ proc loadCfg*(filename: string): bool =
     return false
     
 proc cfg*(T: typedesc, category: string, key: string): T =
+  if not ?loadedConfig:
+    discard loadCfg(defaultCfgFile)
+  
   if not loadedConfig.hasKey(category) or
      not loadedConfig[category].hasKey(key):
     return T.default

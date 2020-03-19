@@ -1,13 +1,19 @@
-import jester
+import jester, elvis
+import util, configparser, defaults
 
 router backendRouter:
   get "/":
-    resp "It's alive!"
+    resp "frontend placeholder"
+  post "/api/auth/?":
+    need "username"
+    need "password"
+    
+    resp Http200, "authenticated\n"
 
 proc main() =
-  let port = paramStr(1).parseInt().Port
-  let settings = newSettings(port=port)
-  var jester = initJester(myrouter, settings=settings)
+  discard loadCfg(defaultCfgFile)
+  
+  var jester = initJester(backendRouter)
   jester.serve()
   
 when isMainModule:

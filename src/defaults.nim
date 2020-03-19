@@ -1,12 +1,14 @@
-import types/config
+const defaultCfgFile* = "config.ini"
 
-const defaultConfigTable*: TkConfig = @[
+const defaultConfigTable*: seq[ tuple[category: string, pairs: seq[ tuple[key: string, value: string] ] ] ] = @[
   ("general", @[
     ("port", "5000"),
     ("bindAddress", "0.0.0.0"),
     ("appName", ""),
-    ("keySaltPrefix", ""),
-    ("keySaltSuffix", ""),
     ("defaultUriScheme", "https")
+  ]),
+  ("auth", @[
+    ("salt", ""),
+    ("expiryDays", "1")
   ])
 ]
