@@ -8,7 +8,11 @@ const defaultConfigTable*: seq[ tuple[category: string, pairs: seq[ tuple[key: s
     ("defaultUriScheme", "https")
   ]),
   ("auth", @[
-    ("salt", ""),
     ("expiryDays", "1")
+  ]),
+  ("security", @[
+    ("salt", ""),
+    ("secret", ""),
+    ("hashIter", "10000")
   ])
 ]
