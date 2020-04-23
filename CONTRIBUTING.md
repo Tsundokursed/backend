@@ -7,4 +7,5 @@ docker-compose -f postgres-docker.yaml up
 ```
 
 The database creditentials are `tsundo : tsundo`
+
 The tsundokursed creditentials are `admin : admin`
