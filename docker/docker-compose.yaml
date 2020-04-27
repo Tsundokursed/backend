@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  db:
+    build: ./postgres
+    restart: always
+    environment:
+      POSTGRES_USER: tsundo
+      POSTGRES_PASSWORD: tsundo
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    build: ./pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tsundo@tsundo
+      PGADMIN_DEFAULT_PASSWORD: tsundo
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - 5050:5050

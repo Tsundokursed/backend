@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "tsundo_db",
+	    "Username": "tsundo",
+	    "Group": "Servers",
+            "Port": 5432,
+	    "Host": "db",
+            "MaintenanceDB": "postgres",
+            "SSLMode": "prefer"
+	}
+    }
+}
