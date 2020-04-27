@@ -1,4 +1,4 @@
-import strutils, os
+import strutils
 import nimcrypto/pbkdf2, nimcrypto/hmac
 
 when not isMainModule:
