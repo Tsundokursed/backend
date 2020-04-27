@@ -10,8 +10,3 @@ CREATE TABLE "public"."users" (
     "password" text NOT NULL,
     CONSTRAINT "users_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
-
-COMMENT ON COLUMN "public"."users"."password" IS 'bcrypt hashed with per instance salt';
-
-INSERT INTO "users" ("id", "username", "password") VALUES
-(1,	'admin',	'$2a$04$......................Dww1QeqjiwOTM3OaQI8W.VyN3/1Ur.i');
