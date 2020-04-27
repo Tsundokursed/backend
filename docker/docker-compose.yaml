@@ -15,7 +15,7 @@ services:
     build: ./pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: tsundo@tsundo
+      PGADMIN_DEFAULT_EMAIL: tsundo
       PGADMIN_DEFAULT_PASSWORD: tsundo
       PGADMIN_LISTEN_PORT: 5050
     ports:
