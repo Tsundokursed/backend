@@ -1,5 +1,5 @@
 import times, json, tables
-import configparser
+import configparser, db/users
 import jwt
 
 type
@@ -35,3 +35,12 @@ proc verifyToken*(token: AuthToken): bool =
 proc getUsername*(token: AuthToken): string =
   let jwt = string(token).toJWT()
   result = $jwt.claims["user"].node.str
+
+  
+proc getToken*(username, password: string): AuthToken =
+  let valid = checkLogin(username, password)
+
+  if not valid:
+    raise newException(AuthError, "Invalid username or password")
+
+  signToken(username)
