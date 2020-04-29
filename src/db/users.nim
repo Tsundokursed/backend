@@ -1,6 +1,9 @@
 import db_postgres
 import common, ../crypto
 
+type
+  AuthError* = object of Exception
+
 proc checkLogin*(username, password: string): bool =
   let hashed = hash(password)
   var valid = false
