@@ -4,6 +4,7 @@ import jwt
 
 type
   AuthToken* = distinct string
+  AuthError* = object of ValueError
 
 proc signToken*(username: string): AuthToken =
   let
@@ -35,7 +36,6 @@ proc verifyToken*(token: AuthToken): bool =
 proc getUsername*(token: AuthToken): string =
   let jwt = string(token).toJWT()
   result = $jwt.claims["user"].node.str
-
   
 proc getToken*(username, password: string): AuthToken =
   let valid = checkLogin(username, password)
