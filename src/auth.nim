@@ -2,7 +2,10 @@ import times, json, tables
 import configparser
 import jwt
 
-proc signToken*(username: string): string =
+type
+  AuthToken* = distinct string
+
+proc signToken*(username: string): AuthToken =
   let
     time = getTime() + int.cfg("auth", "expiryDays").days
     epoch = time.toUnix
@@ -20,15 +23,15 @@ proc signToken*(username: string): string =
 
   token.sign(string.cfg("auth", "salt"))
 
-  $token
+  return AuthToken($token)
 
-proc verifyToken*(token: string): bool =
+proc verifyToken*(token: AuthToken): bool =
   try:
-    let jwtToken = token.toJWT()
+    let jwtToken = string(token).toJWT()
     result = jwtToken.verify(string.cfg("auth", "salt"))
   except:
     result = false
 
-proc getUsername*(token: string): string =
-  let jwt = token.toJWT()
+proc getUsername*(token: AuthToken): string =
+  let jwt = string(token).toJWT()
   result = $jwt.claims["user"].node.str
